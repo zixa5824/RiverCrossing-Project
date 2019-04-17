@@ -5,6 +5,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -54,7 +56,7 @@ public class MenuScene{
         ellipse.setRadiusY(51);
         ellipse.setLayoutX(300);
         ellipse.setLayoutY(57);
-        Stop[] stops = new Stop[] { new Stop(0, Color.DARKRED), new Stop(1, Color.SILVER)};
+        Stop[] stops = new Stop[] { new Stop(0, Color.DARKRED), new Stop(1, Color.BLACK)};
         LinearGradient lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
         ellipse.setFill(lg1);
         //------
@@ -63,11 +65,19 @@ public class MenuScene{
         btnLevels.setFont(font);
         btnLoadGame.setFont(font);
         btnExit.setFont(font);
-        welcomeLabel.setFont(new Font(24));
+        welcomeLabel.setFont(new Font("RockWell Extra Bold",18));
         //------
+        //Setting the Image
+        Image image = new Image("file:image.jpg");
+        ImageView iv = new ImageView(image);
+        iv.setPreserveRatio(false);
+        iv.setFitHeight(400);
+        iv.setFitWidth(617);
+        iv.setOpacity(0.7);
+        //---------------
         Pane pane = new Pane();
         pane.setBackground(new Background(new BackgroundFill(Color.DARKGREY, CornerRadii.EMPTY, Insets.EMPTY)));
-        pane.getChildren().addAll(btnExit,btnLoadGame,btnLevels,welcomeLabel,ellipse);
+        pane.getChildren().addAll(iv,btnExit,btnLoadGame,btnLevels,welcomeLabel,ellipse);
         pane.setPrefSize(600,400);
         scene = new Scene(pane);
 

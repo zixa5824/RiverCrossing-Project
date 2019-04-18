@@ -28,16 +28,24 @@ public class MenuScene{
         welcomeLabel.setLayoutX(173);
         welcomeLabel.setLayoutY(14);
         //------
+        Button btnStartGame = new Button("StartGame");
+        btnStartGame.setLayoutX(238);
+        btnStartGame.setLayoutY(130);
+        btnStartGame.setPrefHeight(31);
+        btnStartGame.setPrefWidth(125);
+        btnStartGame.setTextFill(Paint.valueOf("Green"));
+        //------
+        //------
         Button btnLevels = new Button("Levels");
         btnLevels.setLayoutX(252);
-        btnLevels.setLayoutY(170);
+        btnLevels.setLayoutY(190);
         btnLevels.setPrefHeight(31);
         btnLevels.setPrefWidth(98);
         btnLevels.setTextFill(Paint.valueOf("Green"));
         //------
         Button btnLoadGame = new Button("LoadGame");
         btnLoadGame.setLayoutX(238);
-        btnLoadGame.setLayoutY(231);
+        btnLoadGame.setLayoutY(250);
         btnLoadGame.setPrefHeight(44);
         btnLoadGame.setPrefWidth(125);
         btnLoadGame.setTextFill(Paint.valueOf("Green"));
@@ -65,6 +73,7 @@ public class MenuScene{
         btnLevels.setFont(font);
         btnLoadGame.setFont(font);
         btnExit.setFont(font);
+        btnStartGame.setFont(font);
         welcomeLabel.setFont(new Font("RockWell Extra Bold",18));
         //------
         //Setting the Image
@@ -77,9 +86,18 @@ public class MenuScene{
         //---------------
         Pane pane = new Pane();
         pane.setBackground(new Background(new BackgroundFill(Color.DARKGREY, CornerRadii.EMPTY, Insets.EMPTY)));
-        pane.getChildren().addAll(iv,btnExit,btnLoadGame,btnLevels,welcomeLabel,ellipse);
+        pane.getChildren().addAll(iv,btnStartGame,btnExit,btnLoadGame,btnLevels,welcomeLabel,ellipse);
         pane.setPrefSize(600,400);
         scene = new Scene(pane);
+
+        //----------------------------------
+
+        //START BUTTON
+
+        btnStartGame.setOnAction(e->{
+            PlayGameScene playGameScene = new PlayGameScene(stage, scene);
+            stage.setScene(playGameScene.getScene());
+        });
 
         //EXIT BUTTON
 

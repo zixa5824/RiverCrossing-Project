@@ -54,22 +54,23 @@ public class PlayGameScene {
         sailBackBtn.setLayoutY(140);
         sailBackBtn.setPrefWidth(120);
         //--SETTING ACTION SAIL----
-        //--------TRYING CROSSER MOVEMENT----------------
-        Path path = new Path();
-        path.getElements().add(new MoveTo(0,0));
-        path.getElements().add(new LineTo(650,5));
-        PathTransition pathTransition = new PathTransition();
-        pathTransition.setPath(path);
-        pathTransition.setNode(raftIv);
-        pathTransition.setDuration(Duration.seconds(3));
+        TranslateTransition transition = new TranslateTransition();
+        transition.setByX(641);
+        transition.setByY(-25);
+        transition.setNode(raftIv);
+        transition.setDuration(Duration.seconds(4));
         sailBtn.setOnAction(e->{
-            pathTransition.play();
+            transition.play();
         });
-        //---------------------------
+        TranslateTransition transition1 = new TranslateTransition();
+        transition1.setByX(-641);
+        transition1.setByY(25);
+        transition1.setNode(raftIv);
+        transition1.setDuration(Duration.seconds(4));
         sailBackBtn.setOnAction(e->{
-            path.getElements().add(new ClosePath());
+            transition1.play();
         });
-        //----------------
+        //---------
 
         Pane pane = new Pane();
         pane.getChildren().addAll(bGIv, raftIv,sailBtn,sailBackBtn);

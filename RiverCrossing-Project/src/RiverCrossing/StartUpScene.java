@@ -52,16 +52,17 @@ public class StartUpScene {
         btnMenu.setFont(new Font(18));
         //ANIMATION OF THE BUTTON
         Circle circle2 = new Circle(150);
-        circle2.setLayoutY(177);
+        circle2.setLayoutY(220);
         circle2.setLayoutX(265);
         circle2.setCenterX(-200);
         circle2.setCenterY(-150);
         PathTransition transition = new PathTransition();
-        transition.setDuration(Duration.seconds(2));
+        transition.setDuration(Duration.seconds(1.3));
         transition.setPath(circle2);
         transition.setCycleCount(2);
         transition.setOrientation(PathTransition.OrientationType.NONE);
         transition.setNode(btnMenu);
+        transition.setAutoReverse(true);
         transition.play();
         //------
         //MENU BUTTON ACTION

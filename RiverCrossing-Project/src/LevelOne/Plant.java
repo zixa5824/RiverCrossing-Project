@@ -2,10 +2,14 @@ package LevelOne;
 import RiverCrossing.Crosser;
 import RiverCrossing.ICrosser;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Plant extends Crosser implements ICrosser {
 
+    private String label;
     @Override
     public boolean canSail() {
         return false;
@@ -21,32 +25,37 @@ public class Plant extends Crosser implements ICrosser {
         return 1;
     }
 
-    /*  @Override
-    public BufferedImage[] getImages() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    */
     @Override
     public ICrosser makeCopy() {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
     public void setLabelToBeShown(String label) {
-        // TODO Auto-generated method stub
-
+        this.label = label;
     }
 
     @Override
     public String getLabelToBeShown() {
-        // TODO Auto-generated method stub
-        return null;
+        return label;
     }
 
     @Override
     public BufferedImage[] getImages() {
-        return new BufferedImage[0];
+
+        BufferedImage[] bufferedImage = new BufferedImage[2];
+        File file1 = new File("cabbage.png");
+        try {
+            bufferedImage[0] = ImageIO.read(file1);
+        } catch ( IOException e ) {
+            e.printStackTrace();
+        }
+        File file2 = new File("cabbage.png");
+        try {
+            bufferedImage[1] = ImageIO.read(file2);
+        } catch ( IOException e ) {
+            e.printStackTrace();
+        }
+        return bufferedImage;
     }
 }

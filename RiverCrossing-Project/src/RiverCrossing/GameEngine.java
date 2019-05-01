@@ -6,12 +6,11 @@ import java.util.List;
 public class GameEngine implements IRiverCrossingController
 {
     private ICrossingStrategy iCrossingStrategy;
-
-    private List<ICrosser> boatCrossers;
+    private boolean left;
     private List<ICrosser> rightBankCrosser;
     private List<ICrosser> leftBankCrossers;
     private String[] instructions;
-
+    private int moves;
     //implementing Singleton Design Pattern.
     private static GameEngine gameEngine;
     public static GameEngine getGameEngine()
@@ -31,18 +30,17 @@ public class GameEngine implements IRiverCrossingController
     @Override
     public void newGame(ICrossingStrategy gameStrategy) {
 
-        boatCrossers = new ArrayList<>();
         rightBankCrosser = new ArrayList<>();
         leftBankCrossers = gameStrategy.getInitialCrossers();
         iCrossingStrategy = gameStrategy;
         instructions = gameStrategy.getInstructions();
-
+        left = true;
+        moves = 0;
     }
 
     @Override
     public void resetGame() {
-        // TODO Auto-generated method stub
-
+        newGame(iCrossingStrategy);
     }
 
     @Override
@@ -53,38 +51,51 @@ public class GameEngine implements IRiverCrossingController
 
     @Override
     public List<ICrosser> getCrossersOnRightBank() {
-        // TODO Auto-generated method stub
         return rightBankCrosser;
     }
 
     @Override
     public List<ICrosser> getCrossersOnLeftBank() {
-
         return leftBankCrossers;
     }
 
     @Override
     public boolean isBoatOnTheLeftBank() {
-        // TODO Auto-generated method stub
-        return false;
+        return left;
     }
 
     @Override
     public int getNumberOfSails() {
-        // TODO Auto-generated method stub
-        return 0;
+        return moves;
     }
 
     @Override
     public boolean canMove(List<ICrosser> crossers, boolean fromLeftToRightBank) {
 
-        return iCrossingStrategy.isValid(rightBankCrosser,leftBankCrossers,crossers);
+        return iCrossingStrategy.isValid(rightBankCrosser,leftBankCrossers, crossers);
     }
 
     @Override
-    public void doMove(List<ICrosser> crossers, boolean fromLeftToRightBank) {
-        // TODO Auto-generated method stub
-
+    public void doMove(List<ICrosser> crossers, boolean fromLeftToRightBank)
+    {
+        if(fromLeftToRightBank)
+        {
+            for (int i = 0; i < crossers.size() ; i++)
+            {
+                rightBankCrosser.add(crossers.get(i));
+                leftBankCrossers.remove(crossers.get(i));
+            }
+        }
+        else
+        {
+            for (int i = 0; i < crossers.size() ; i++)
+            {
+                leftBankCrossers.add(crossers.get(i));
+                rightBankCrosser.remove(crossers.get(i));
+            }
+        }
+        moves++;
+        left = false;
     }
 
     @Override

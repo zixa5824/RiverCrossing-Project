@@ -11,6 +11,7 @@ public class Main extends Application {
 
         StartUpScene startUpScene = new StartUpScene(primaryStage);
         primaryStage.setScene(startUpScene.getScene());
+        primaryStage.setTitle("River Crossing Game");
         primaryStage.show();
         primaryStage.setResizable(false);
     }

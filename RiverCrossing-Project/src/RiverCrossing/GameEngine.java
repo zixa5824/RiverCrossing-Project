@@ -95,7 +95,9 @@ public class GameEngine implements IRiverCrossingController
             }
         }
         moves++;
+        if(left)
         left = false;
+        else left = true;
     }
 
     @Override

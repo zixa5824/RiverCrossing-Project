@@ -27,7 +27,10 @@ public class StrategyOne implements ICrossingStrategy {
                 AlertBox.display("SAIL ERROR", boatRiders.get(0).getLabelToBeShown() +" and " + boatRiders.get(1).getLabelToBeShown() + " can't sail, Only Farmer can sail.\nPlease Read The Instructions Well");
                 return false;
             }
-
+        if(rightBankCrossers.size() != 0)
+        for (int i = 0; i < rightBankCrossers.size() ; i++) {
+            System.out.println(rightBankCrossers.get(i).getLabelToBeShown());
+        }
         if(rightBankCrossers.size()>1)
         {
             for(int i = 0; i < rightBankCrossers.size() - 1; i++)

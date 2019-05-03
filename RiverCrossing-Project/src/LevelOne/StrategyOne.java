@@ -1,5 +1,6 @@
 package LevelOne;
 import RiverCrossing.AlertBox;
+import RiverCrossing.GameEngine;
 import RiverCrossing.ICrosser;
 import RiverCrossing.ICrossingStrategy;
 
@@ -11,6 +12,7 @@ public class StrategyOne implements ICrossingStrategy {
     public boolean isValid(List<ICrosser> rightBankCrossers, List<ICrosser> leftBankCrossers,
                            List<ICrosser> boatRiders)
     {
+        GameEngine gameEngine = GameEngine.getGameEngine();
         if(boatRiders.size() == 0)
         {
             AlertBox.display("SAIL ERROR","No boat Riders");
@@ -22,59 +24,61 @@ public class StrategyOne implements ICrossingStrategy {
                 AlertBox.display("SAIL ERROR", boatRiders.get(0).getLabelToBeShown() + " can't sail, Only Farmer can sail.\nPlease Read The Instructions Well");
                 return false;
             }
-        if (boatRiders.size() > 1)
-            if(!(boatRiders.get(0).canSail()||boatRiders.get(1).canSail())) {
-                AlertBox.display("SAIL ERROR", boatRiders.get(0).getLabelToBeShown() +" and " + boatRiders.get(1).getLabelToBeShown() + " can't sail, Only Farmer can sail.\nPlease Read The Instructions Well");
-                return false;
-            }
-        if(rightBankCrossers.size() != 0)
-        for (int i = 0; i < rightBankCrossers.size() ; i++) {
-            System.out.println(rightBankCrossers.get(i).getLabelToBeShown());
-        }
-        if(rightBankCrossers.size()>1)
-        {
-            for(int i = 0; i < rightBankCrossers.size() - 1; i++)
-            {
-                if(boatRiders.size() == 1) {
-                    if (rightBankCrossers.get(i) == boatRiders.get(0))
-                        continue;
-                }
-                else if(rightBankCrossers.get(i) == boatRiders.get(0) || rightBankCrossers.get(i) == boatRiders.get(1))  continue;
-                if(Math.abs(rightBankCrossers.get(i).getEatingRank() - rightBankCrossers.get(i + 1).getEatingRank())==1)
-                {
-                    if(boatRiders.size() == 1) {
-                        if (rightBankCrossers.get(i + 1) == boatRiders.get(0))
-                            continue;
-                    }
-                    else if(rightBankCrossers.get(i + 1) == boatRiders.get(0) || rightBankCrossers.get(i + 1) == boatRiders.get(1)) continue;
-                    AlertBox.display("You Will Lose",leftBankCrossers.get(i).getLabelToBeShown() + " and " + leftBankCrossers.get(i + 1).getLabelToBeShown() + " can't be left alone in the left bank.\nPlease Check Instructions Again.");
-                    return false;
-                }
-            }
-        }
-
-        if(leftBankCrossers.size() > 1)
-        {
-            for(int i = 0; i < leftBankCrossers.size() - 1; i++)
-            {
-                if(boatRiders.size() == 1)
-                {
-                    if (leftBankCrossers.get(i) == boatRiders.get(0))
-                        continue;
-                }
-                else if(leftBankCrossers.get(i) == boatRiders.get(0) || leftBankCrossers.get(i) == boatRiders.get(1))  continue;
-                if(Math.abs(leftBankCrossers.get(i).getEatingRank() - leftBankCrossers.get(i + 1).getEatingRank()) == 1)
-                {
-                    if(boatRiders.size() == 1)
+        if(gameEngine.isBoatOnTheLeftBank()){
+            for (int i = 0; i < leftBankCrossers.size(); i++) {
+                for (int j = 0; j < boatRiders.size() ; j++) {
+                    if(leftBankCrossers.get(i).getLabelToBeShown().equalsIgnoreCase(boatRiders.get(j).getLabelToBeShown()))
                     {
-                        if (leftBankCrossers.get(i) == boatRiders.get(0))
-                            continue;
+                        leftBankCrossers.remove(i);
                     }
-                    else if(leftBankCrossers.get(i + 1) == boatRiders.get(0) || leftBankCrossers.get(i + 1) == boatRiders.get(1)) continue;
-                    AlertBox.display("You Will Lose",leftBankCrossers.get(i).getLabelToBeShown() + " and " + leftBankCrossers.get(i + 1).getLabelToBeShown() + " can't be left alone in the left bank.\nPlease Check Instructions Again.");
-                    return false;
                 }
             }
+            if(leftBankCrossers.size() == 0)    return true;
+            else if(leftBankCrossers.size() == 1)    return true;
+            else
+            for (int i = 0; i < leftBankCrossers.size(); i++) {
+                for (int j = 1; j < leftBankCrossers.size() ; j++) {
+                    if(Math.abs(leftBankCrossers.get(i).getEatingRank() - leftBankCrossers.get(j).getEatingRank()) == 1) {
+                        if (leftBankCrossers.get(i).getEatingRank() > leftBankCrossers.get(j).getEatingRank())
+                        {
+                            AlertBox.display("You Will Lose", leftBankCrossers.get(i).getLabelToBeShown() + " will eat " + leftBankCrossers.get(j).getLabelToBeShown()+".\nPlease Read Again The INSTRUCTIONS");
+                            return false;
+                        }
+                        else
+                        {
+                            AlertBox.display("You Will Lose", leftBankCrossers.get(j).getLabelToBeShown() + " will eat " + leftBankCrossers.get(i).getLabelToBeShown()+".\nPlease Read Again The INSTRUCTIONS");
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < rightBankCrossers.size(); i++) {
+                for (int j = 0; j < boatRiders.size() ; j++) {
+                    if(rightBankCrossers.get(i).getLabelToBeShown().equalsIgnoreCase(boatRiders.get(j).getLabelToBeShown()))
+                    {
+                        rightBankCrossers.remove(i);
+                    }
+                }
+            }
+            if(rightBankCrossers.size() == 0)    return true;
+            else if(rightBankCrossers.size() == 1)    return true;
+            else
+                for (int i = 0; i < rightBankCrossers.size(); i++) {
+                    for (int j = 1; j < rightBankCrossers.size() ; j++) {
+                        if(Math.abs(rightBankCrossers.get(i).getEatingRank() - rightBankCrossers.get(j).getEatingRank()) == 1) {
+                            if (rightBankCrossers.get(i).getEatingRank() > rightBankCrossers.get(j).getEatingRank()) {
+                                AlertBox.display("You Will Lose", rightBankCrossers.get(i).getLabelToBeShown() + " will eat " + rightBankCrossers.get(j).getLabelToBeShown() + ".\nPlease Read Again The INSTRUCTIONS");
+                                return false;
+                            } else {
+                                AlertBox.display("You Will Lose", rightBankCrossers.get(j).getLabelToBeShown() + " will eat " + rightBankCrossers.get(i).getLabelToBeShown() + ".\nPlease Read Again The INSTRUCTIONS");
+                                return false;
+                            }
+                        }
+                    }
+                }
         }
         return true;
     }

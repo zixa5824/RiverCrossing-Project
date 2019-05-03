@@ -1,6 +1,6 @@
 package RiverCrossing;
 
-import LevelOne.StrategyOne;
+import LevelOne.PlayGameScene;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -46,7 +46,6 @@ public class LevelsScene{
         //-------
         levelOneBtn.setOnAction(e->{
             PlayGameScene levelOneScene = new PlayGameScene(stage, scene);
-            gameEngine.newGame(new StrategyOne());
             stage.setScene(levelOneScene.getScene());
         });
     }
